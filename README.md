@@ -51,7 +51,7 @@ L'algorithme principal suit trois étapes :
    - Une fois qu'un joueur est traité, son âge et son score sont ajoutés au `SegmentTree`.
    - Cela permet de maintenir à jour les scores maximaux pour chaque plage d'âges.
 
-Approche simple sans `SegmentTree`
+### Approche simple sans `SegmentTree`
 
 1. **Tri des joueurs** :
    - Les joueurs sont triés par âge croissant et, à âge égal, par score décroissant.

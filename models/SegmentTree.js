@@ -28,5 +28,4 @@ class SegmentTree {
         return maxElo;
     }
 }
-
 exports.default = SegmentTree;

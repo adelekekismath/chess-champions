@@ -1,14 +1,5 @@
-interface Player {
-  name: string;
-  age: number;
-  elo: number;
-}
-type TestCase = {
-    description: string;
-    players: Player[];
-    expected: Player[];
-  };
 import Random1000Players from "./gameData";
+import { Player, TestCase } from "../models/Types";
   
   
 export const testCases: TestCase[] = [

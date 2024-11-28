@@ -1,11 +1,6 @@
-
 import SegmentTree from "./models/SegmentTree";
+import {Player} from "./models/Types";
 
-type Player = {
-  name: string;
-  age: number;
-  elo: number;
-};
 
 
 function findChampions(players: Player[]): Player[] {

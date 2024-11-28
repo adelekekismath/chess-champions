@@ -14,12 +14,12 @@ Ce projet est une application qui permet d'identifier les "champions" parmi une 
 
 ## Utilisation
 1. Compilez le code TypeScript :
-    ```
+   ```bash
     npx tsc
-  ```
+    ```
 
 2. Lancez les tests :
-    ```
+    ```bash
     node dist/test.js
     ```
 

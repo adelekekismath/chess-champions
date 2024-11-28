@@ -4,29 +4,46 @@ export default class SegmentTree {
   
     constructor(maxAge: number) {
       this.size = maxAge + 1;
+      
+      // The tree array has double the size to account for both leaf nodes and internal nodes
       this.tree = Array(this.size * 2).fill(-1);
     }
   
-    update(age: number, elo: number): void {
-      let index = age + this.size;
-      this.tree[index] = Math.max(this.tree[index], elo);
-      while (index > 1) {
-        index = Math.floor(index / 2);
-        this.tree[index] = Math.max(this.tree[2 * index], this.tree[2 * index + 1]);
+    update(age: number, eloRating: number): void {
+      // Convert the age to the corresponding position in the segment tree
+      let positionInTree = age + this.size;
+
+      // Update the leaf node with the maximum ELO rating
+      this.tree[positionInTree] = Math.max(this.tree[positionInTree], eloRating);
+
+      // Propagate the update up the tree
+      while (positionInTree > 1) {
+        // Move to the parent node 
+        positionInTree = Math.floor(positionInTree / 2);
+
+        // Update the parent node with the maximum of its two children
+        this.tree[positionInTree] = Math.max(this.tree[2 * positionInTree], this.tree[2 * positionInTree + 1]);
       }
     }
   
-    query(startAge: number, endAge: number): number {
-      startAge += this.size;
-      endAge += this.size;
-      let maxElo = -1;
+    getMaxEloInRange(startPosition: number, endPosition: number): number {
+      // Adjust positions to the corresponding indices in the segment tree
+      startPosition += this.size;
+      endPosition += this.size;
+
+      let maxEloRating = -1; // Initialize the maximum ELO rating
   
-      while (startAge <= endAge) {
-        if (startAge % 2 === 1) maxElo = Math.max(maxElo, this.tree[startAge++]);
-        if (endAge % 2 === 0) maxElo = Math.max(maxElo, this.tree[endAge--]);
-        startAge = Math.floor(startAge / 2);
-        endAge = Math.floor(endAge / 2);
+      while (startPosition <= endPosition) {
+         // If the start position is odd, include it in the range and move to the next position
+        if (startPosition % 2 === 1) maxEloRating = Math.max(maxEloRating, this.tree[startPosition++]);
+
+        // If the end position is even, include it in the range and move to the previous position
+        if (endPosition % 2 === 0) maxEloRating = Math.max(maxEloRating, this.tree[endPosition--]);
+
+        // Move to the parent nodes
+        startPosition = Math.floor(startPosition / 2);
+        endPosition = Math.floor(endPosition / 2);
       }
-      return maxElo;
+      return maxEloRating;
     }
   }

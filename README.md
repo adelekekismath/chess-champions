@@ -2,7 +2,7 @@
 
 ## Description
 Ce projet est une application qui permet d'identifier les "champions" parmi une liste de joueurs d'échecs. Un joueur est dit "champion" si et seulement si il n'y a personne d'autre dans la liste qui "l'élimine", c'est-à-dire :
-- Personne d'autre n'est à la fois strictement plus fort (Elo) et plus jeune ou du même âge.
+- Personne d'autre n'est à la fois strictement plus fort (eloRating) et plus jeune ou du même âge.
 - Personne d'autre n'est à la fois strictement plus jeune et plus fort ou du même score.
 
 
@@ -41,7 +41,7 @@ L'algorithme principal suit trois étapes :
 
 1. **Tri des joueurs** :
    - Les joueurs sont triés par **âge croissant**.
-   - Si deux joueurs ont le même âge, ils sont triés par **score (ELO) décroissant**.
+   - Si deux joueurs ont le même âge, ils sont triés par **score (eloRating) décroissant**.
 
 2. **Vérification des dominations** :
    - Pour chaque joueur, on utilise le `SegmentTree` pour vérifier si un joueur strictement plus jeune ou du même âge a un score supérieur ou égal.

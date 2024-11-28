@@ -1,7 +1,7 @@
 type Player = {
     name: string;
     age: number;
-    elo: number;
+    eloRating: number;
 };
 
 type TestCase = {

@@ -6,13 +6,14 @@ function getMaxAge(players: Player[]): number {
 }
 
 function sortPlayers(players: Player[]): Player[] {
-  return players.sort((a, b) => a.age - b.age || b.elo - a.elo);
+  const playersWithoutDuplicates = Array.from(new Set(players));
+  return playersWithoutDuplicates.sort((a, b) => a.age - b.age || b.eloRating - a.eloRating);
 }
 
 function isChampion(player: Player, segmentTree: SegmentTree, champions: Player[]): boolean {
-  const maxEloOfYoungerPlayers = segmentTree.query(0, player.age);
-  return maxEloOfYoungerPlayers <= player.elo &&
-    !champions.some(champion => champion.age < player.age && champion.elo === player.elo);
+  const maxeloRatingOfYoungerPlayers = segmentTree.getMaxEloInRange(0, player.age);
+  return maxeloRatingOfYoungerPlayers <= player.eloRating &&
+    !champions.some(champion => champion.age < player.age && champion.eloRating === player.eloRating);
 }
 
 function findChampions(players: Player[]): Player[] {
@@ -25,7 +26,7 @@ function findChampions(players: Player[]): Player[] {
     if (isChampion(player, playersSegmentTree, championsList)) {
       championsList.push(player);
     }
-    playersSegmentTree.update(player.age, player.elo);
+    playersSegmentTree.update(player.age, player.eloRating);
   }
 
   return championsList;

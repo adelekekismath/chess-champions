@@ -2,7 +2,6 @@ import SegmentTree from "./models/SegmentTree";
 import {Player} from "./models/Types";
 
 
-
 function findChampions(players: Player[]): Player[] {
   const maxAge = players.reduce((max, player) => Math.max(max, player.age), 0);
 

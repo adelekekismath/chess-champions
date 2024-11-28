@@ -1,5 +1,5 @@
-import Random1000Players from "./gameData";
-import { Player, TestCase } from "../models/Types";
+import Random1000Players from "./random1000Players";
+import { TestCase } from "../models/Types";
   
   
 export const testCases: TestCase[] = [

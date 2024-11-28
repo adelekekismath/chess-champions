@@ -27,7 +27,7 @@ Ce projet est une application qui permet d'identifier les "champions" parmi une 
 
 ### Classe `SegmentTree`
 
-La classe `SegmentTree` implémente une structure d'arbre segmenté, permettant de :
+La classe `SegmentTree` (reference https://cp-algorithms.com/data_structures/segment_tree.html) implémente une structure d'arbre segmenté, permettant de :
 - **Mettre à jour** le score maximum pour un âge donné en \(O(\log n)\).
 - **Rechercher** efficacement le score maximum sur une plage d'âges en \(O(\log n)\).
 
@@ -51,12 +51,26 @@ L'algorithme principal suit trois étapes :
    - Une fois qu'un joueur est traité, son âge et son score sont ajoutés au `SegmentTree`.
    - Cela permet de maintenir à jour les scores maximaux pour chaque plage d'âges.
 
+Approche simple sans `SegmentTree`
+
+1. **Tri des joueurs** :
+   - Les joueurs sont triés par âge croissant et, à âge égal, par score décroissant.
+   - **Complexité** : \(O(n \log n)\).
+
+2. **Vérification des conditions pour chaque joueur** :
+   - Pour chaque joueur, il faut vérifier s'il est dominé par tous les autres joueurs.
+   - Cela nécessite une comparaison entre chaque paire de joueurs.
+   - **Complexité** : \(O(n^2)\).
+
+3. **Complexité totale** :
+   - \(O(n \log n)\) pour le tri + \(O(n^2)\) pour les comparaisons.
+   - Résultat final : \(O(n^2)\).
 ---
 
 ### Performance de l'algorithme
 
 1. **Tri des joueurs** :
-   - Effectué en \(O(n \log n)\).
+   - Effectué en \(O(n \log n)\) (fonction: Array.Prototype.Sort() de javascript).
 
 2. **Parcours des joueurs avec le Segment Tree** :
    - Chaque mise à jour ou requête prend \(O(\log n)\).

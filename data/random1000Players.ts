@@ -1,8 +1,4 @@
-interface Player {
-  name: string;
-  age: number;
-  elo: number;
-}
+import { Player } from "../models/Types"
 
 const players: Player[] = [
   {

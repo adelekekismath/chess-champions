@@ -1,9 +1,5 @@
-import SegmentTree from "./models/SegmentTree";
 import { Player } from "./models/Types";
 
-function getMaxAge(players: Player[]): number {
-  return players.reduce((maxAge, player) => Math.max(maxAge, player.age), 0);
-}
 
 function sortPlayers(players: Player[]): Player[] {
   const playersWithoutDuplicates = Array.from(new Set(players));
@@ -18,16 +14,15 @@ function isChampion(player: Player, players: Player[]): boolean {
 }
 
 
-
 function findChampions(players: Player[]): Player[] {
 
-  if(players.length < 2 ) return players;
+  if (players.length < 2) return players;
 
   const sortedPlayers = sortPlayers(players);
   const championsList: Player[] = [];
 
   for (const player of sortedPlayers) {
-    if (isChampion(player, sortedPlayers)) 
+    if (isChampion(player, sortedPlayers))
       championsList.push(player);
   }
   return championsList;

@@ -10,31 +10,26 @@ function sortPlayers(players: Player[]): Player[] {
   return playersWithoutDuplicates.sort((a, b) => a.age - b.age || b.eloRating - a.eloRating);
 }
 
-function isChampion(player: Player, segmentTree: SegmentTree, champions: Player[]): boolean {
-  const maxEloRatingOfYoungerPlayers = segmentTree.getMaxEloInRange(0, player.age);
-  return (maxEloRatingOfYoungerPlayers <= player.eloRating) && !hasYoungerChampionWithSameScore(player, champions);
+function isChampion(player: Player, players: Player[]): boolean {
+  return !players.some(other =>
+    (other.eloRating > player.eloRating && other.age <= player.age) ||
+    (other.age < player.age && other.eloRating >= player.eloRating)
+  );
 }
 
-function hasYoungerChampionWithSameScore(player: Player, champions: Player[]): boolean {
-  return champions.some(champion => champion.age < player.age && champion.eloRating === player.eloRating);
-}
+
 
 function findChampions(players: Player[]): Player[] {
 
   if(players.length < 2 ) return players;
 
-  const maxAge = getMaxAge(players);
   const sortedPlayers = sortPlayers(players);
-  const playersSegmentTree = new SegmentTree(maxAge);
   const championsList: Player[] = [];
 
   for (const player of sortedPlayers) {
-    if (isChampion(player, playersSegmentTree, championsList)) {
+    if (isChampion(player, sortedPlayers)) 
       championsList.push(player);
-    }
-    playersSegmentTree.update(player.age, player.eloRating);
   }
-
   return championsList;
 }
 

@@ -10,8 +10,11 @@ function testFindChampions(): void {
     const duration = endTime - startTime;
     const isPassed = JSON.stringify(result) === JSON.stringify(expected);
   
+    const passedMessage = `\x1b[32mPassed\x1b[0m`;
+    const failedMessage = `\x1b[31mFailed\x1b[0m`; 
+  
     console.log(
-      `Test Case (${description}): ${isPassed ? "Passed" : "Failed"} in ${duration}ms`
+      `Test Case (${description}): ${isPassed ? passedMessage : failedMessage} in ${duration}ms`
     );
   });
 }

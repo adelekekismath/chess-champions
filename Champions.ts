@@ -15,7 +15,7 @@ function isEliminatedByChampion(champions: Player[], player: Player): boolean {
     const champion = champions[middle];
 
     if ((champion.eloRating > player.eloRating && champion.age <= player.age) ||
-        (champion.age < player.age && champion.eloRating >= player.eloRating)) {
+      (champion.age < player.age && champion.eloRating >= player.eloRating)) {
       return true;
     }
 
@@ -28,7 +28,6 @@ function isEliminatedByChampion(champions: Player[], player: Player): boolean {
 
   return false;
 }
-
 
 function findChampions(players: Player[]): Player[] {
 
@@ -45,16 +44,15 @@ function findChampions(players: Player[]): Player[] {
     const isChampion =
       maxEloOfYoungerPlayers <= player.eloRating &&
       (!championsList.length || !isEliminatedByChampion(championsList, player));
-        
-    if (isChampion) 
-      championsList.push(player);
 
+    if (isChampion)
+      championsList.push(player);
 
     maxEloRatingByAge[player.age] = Math.max(
       maxEloRatingByAge[player.age] || -Infinity,
       player.eloRating
     );
-  
+
   }
   return championsList;
 }

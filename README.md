@@ -33,14 +33,27 @@ Ce projet est une application qui permet d'identifier les "champions" parmi une 
    - Les joueurs sont triés par âge croissant et, à âge égal, par score décroissant.
    - **Complexité** : \(O(n \log n)\).
 
-2. **Vérification des conditions pour chaque joueur** :
-   - Pour chaque joueur, il faut vérifier s'il est dominé par au moins les autres joueurs.
-   - Cela nécessite une comparaison entre chaque paire de joueurs.
-   - **Complexité** : \(O(n^2)\).
+2. **Boucle externe** : \( O(n) \).
+3. **Appels à `isEliminatedByChampion`** :
+  - En moyenne \( O(\log m) \) par joueur.
+  - Total : \( O(n \log m) \).
+4. **Mise à jour de `maxEloRatingByAge`** : 
+  - \( O(a \cdot n) \), où \( a \) est une constante liée à l'intervalle des âges.
 
-3. **Complexité totale** :
-   - \(O(n \log n)\) pour le tri + \(O(n^2)\) pour les comparaisons.
-   - Résultat final : \(O(n^2)\).
+### La partie dominante est donc \( O(n \log m) \).
+
+---
+
+### Résultat final :
+\[
+O(n \log n + n \log m) \approx O(n \log n)
+\]
+
+où :
+- \( n \) est le nombre de joueurs.
+- \( m \) (taille de `championsList`) est au plus \( n \).
+
+   
 ---
 
 

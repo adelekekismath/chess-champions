@@ -14,7 +14,7 @@ function testFindChampions(): void {
     const failedMessage = `\x1b[31mFailed\x1b[0m`;
 
     console.log(
-      `Test Case (${description}): ${isPassed ? passedMessage : failedMessage} in ${duration}ms`
+      `Test Case (${description}): ${isPassed ? passedMessage : failedMessage} in ${duration}ms\n`  
     );
   });
 }

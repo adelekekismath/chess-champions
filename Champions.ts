@@ -6,11 +6,27 @@ function sortPlayers(players: Player[]): Player[] {
   return playersWithoutDuplicates.sort((a, b) => a.age - b.age || b.eloRating - a.eloRating);
 }
 
-function isChampion(player: Player, players: Player[]): boolean {
-  return !players.some(other =>
-    (other.eloRating > player.eloRating && other.age <= player.age) ||
-    (other.age < player.age && other.eloRating >= player.eloRating)
-  );
+function isEliminatedByChampion(champions: Player[], player: Player): boolean {
+  let start = 0;
+  let end = champions.length - 1;
+
+  while (start <= end) {
+    const middle = Math.floor((start + end) / 2);
+    const champion = champions[middle];
+
+    if ((champion.eloRating > player.eloRating && champion.age <= player.age) ||
+        (champion.age < player.age && champion.eloRating >= player.eloRating)) {
+      return true;
+    }
+
+    if (champion.age < player.age || (champion.age === player.age && champion.eloRating <= player.eloRating)) {
+      start = middle + 1;
+    } else {
+      end = middle - 1;
+    }
+  }
+
+  return false;
 }
 
 
@@ -20,12 +36,29 @@ function findChampions(players: Player[]): Player[] {
 
   const sortedPlayers = sortPlayers(players);
   const championsList: Player[] = [];
+  const maxEloRatingByAge: number[] = [];
 
   for (const player of sortedPlayers) {
-    if (isChampion(player, sortedPlayers))
+    const maxEloOfYoungerPlayers =
+      maxEloRatingByAge[player.age - 1] || -Infinity;
+
+    const isChampion =
+      maxEloOfYoungerPlayers <= player.eloRating &&
+      (!championsList.length || !isEliminatedByChampion(championsList, player));
+        
+    if (isChampion) 
       championsList.push(player);
+
+
+    maxEloRatingByAge[player.age] = Math.max(
+      maxEloRatingByAge[player.age] || -Infinity,
+      player.eloRating
+    );
+  
   }
   return championsList;
 }
+
+
 
 export default findChampions;

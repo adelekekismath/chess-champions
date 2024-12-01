@@ -26,36 +26,52 @@ Ce projet est une application qui permet d'identifier les "champions" parmi une 
 ## Explication de l'algorithme
 
 ---
+#### Fonction `findChampions`
 
-### Fonction `findChampions`
+1. **Initialisation** :
+   - Vérifie si le nombre de joueurs est inférieur à 2.
+   - Trie les joueurs par âge et Elo à l'aide de `sortPlayers`.
+   - Initialise :
+     - `championsList` : Liste des champions.
+     - `maxEloRatingByAge` : Tableau des Elo maximaux par tranche d'âge.
 
-1. **Tri des joueurs** :
-   - Les joueurs sont triés par âge croissant et, à âge égal, par score décroissant.
-   - **Complexité** : \(O(n \log n)\).
-
-2. **Boucle externe** : \( O(n) \).
-3. **Appels à `isEliminatedByChampion`** :
-  - En moyenne \( O(\log m) \) par joueur.
-  - Total : \( O(n \log m) \).
-4. **Mise à jour de `maxEloRatingByAge`** : 
-  - \( O(a \cdot n) \), où \( a \) est une constante liée à l'intervalle des âges.
-
-### La partie dominante est donc \( O(n \log m) \).
+2. **Boucle principale** :
+   - Pour chaque joueur trié :
+     - **Étape 1 : Vérification des jeunes joueurs** :
+       - Vérifie si le joueur n'est pas éliminé par des joueurs plus jeunes via `maxEloRatingByAge`.
+       - Complexité : \( O(1) \).
+     - **Étape 2 : Vérification avec les champions existants** :
+       - Vérifie si le joueur est éliminé via `isEliminatedByChampion` (recherche binaire).
+       - Complexité : \( O(log m) \), où \( m \) est la taille de `championsList`.
+     - **Étape 3 : Mise à jour de la liste des champions** :
+       - Si le joueur est un champion, il est ajouté à la liste.
+     - **Étape 4 : Mise à jour des Elo maximaux par âge** :
+       - Parcourt les tranches d'âge jusqu'à l'âge du joueur et met à jour `maxEloRatingByAge`.
+       - Complexité : \( O(a) \), où \( a \) est l'intervalle des âges.
 
 ---
 
-### Résultat final :
-\[
-O(n \log n + n \log m) \approx O(n \log n)
-\]
+### Complexité
 
-où :
-- \( n \) est le nombre de joueurs.
-- \( m \) (taille de `championsList`) est au plus \( n \).
+#### 1. **Tri des joueurs (`sortPlayers`)**
+   - Complexité : \( O(n log n) \), où \( n \) est le nombre de joueurs.
 
-   
----
+#### 2. **Boucle principale**
+   - Pour chaque joueur (\( n \)) :
+     - Appels à `isEliminatedByChampion` :
+       - Recherche binaire dans la liste des champions (\( O(log m) \), où \( m ≤ n \)).
+     - Mise à jour de `maxEloRatingByAge` :
+       - \( O(a) \), où \( a \) est l'intervalle des âges (constant dans un contexte réel).
 
+   Complexité par joueur : \( O(log m + a) \).
+
+   Total : \( O(n log m + a . n) \).
+
+#### 3. **Complexité totale**
+   - En combinant le tri et la boucle principale :
+     \[O(n log n) + O(n log m + a . n)\]
+   - Si \( m ≈ n \) et \( a \) est une constante :
+     \[O(n log n + n log n) = O(n log n)\]
 
 ### Cas particuliers gérés
 
